@@ -1,66 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azucar al Gusto</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"
+        integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js" type="text/javascript" defer></script>
+
+    <title>Dashboard con CSV</title>
     <style>
         body {
+            text-align: center;
             background-color: #FFFBF1;
-            background-image: url('https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/a3b6b8a1bc4fc5744a0287e289a6ba3c1bad5118/Fondo%20corazones.svg');
-            background-repeat: repeat;
-            background-size: contain;
             font-family: 'Book Antiqua', serif;
             color: #6E3420;
-            margin: 0;
-            padding: 0;
         }
-
-        header {
-            display: flex;
-            align-items: center;
-            background-color: #FFFBF1;
-            padding: 20px;
-            box-shadow: 0 4px 2px -2px gray;
-        }
-
-        #logo {
-            width: 60px;
-            height: auto;
-            margin-right: 20px;
-        }
-
-        #title {
-            font-size: 40px;
-            margin: 0;
-        }
-
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-
-        iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
+        h1 {
             margin-top: 20px;
+            font-size: 40px;
         }
-
+        .dashboard-wrapper {
+            margin: auto;
+            max-width: 920px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 15px;
+        }
+        .panel {
+            text-align: left;
+            background-color: #fff;
+            border: 1px solid #d3d3d3;
+            box-shadow: 0 0 4px 1px rgba(143,143,143,.2);
+            padding: 15px;
+        }
+        #p1.panel, #p5.panel {
+            grid-column: 1 / 4;
+        }
+        .bottom {
+            font-size: 10px;
+            margin-top: 15px;
+        }
+        .bottom a {
+            color: #333;
+            text-decoration: none;
+        }
     </style>
 </head>
+
 <body>
-    <header>
-        <img id="logo" src="https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/a3b6b8a1bc4fc5744a0287e289a6ba3c1bad5118/Logo%20Solo.svg" alt="Logo Azucar al Gusto">
-        <h1 id="title">Azucar al Gusto</h1>
-    </header>
+    <h1>Azúcar al Gusto</h1>
+    <div class="dashboard-wrapper">
+        <div id="p1" class="panel">
+            <h2>Tabla de Datos</h2>
+            <div id="p1Chart"></div>
+        </div>
+        <div id="p2" class="panel">
+            <h2>Gráfico de Barras</h2>
+            <div id="p2Chart"></div>
+        </div>
+        <div id="p3" class="panel">
+            <h2>Gráfico Circular</h2>
+            <div id="p3Chart"></div>
+        </div>
+        <div id="p4" class="panel">
+            <h2>Gráfico de Área</h2>
+            <div id="p4Chart"></div>
+        </div>
+        <div id="p5" class="panel">
+            <h2>Último Gráfico</h2>
+            <div id="p5Chart"></div>
+        </div>
+    </div>
 
-    <main>
-        <h2>Gráficas de Google Sheets</h2>
-        <p>Estas son las gráficas iniciales obtenidas de nuestros datos:</p>
-
-        <!-- Integrar gráficos de Google Sheets mediante iframes -->
-         <iframe src="https://docs.google.com/spreadsheets/d/17SZ8KjBhX-NmU0sdffXtK-GA_uvM9Ctzec2q4y84QVU/pubhtml?widget=true&amp;headers=false"></iframe>
-    </main>
+    <div class="bottom"><a target="_blank" href="">Creado por [Tu Nombre]</a></div>
 </body>
+
 </html>
