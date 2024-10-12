@@ -121,6 +121,8 @@
     <div class="bottom"><a target="_blank" href="">Fabrizio Caceres</a></div>
 
     <script>
+		google.charts.load('current', {'packages':['sankey','corechart', 'bar', 'calendar']});
+		google.charts.setOnLoadCallback(drawCharts);
         // Function to place hearts randomly in the background
         function placeHearts() {
             const body = document.body;
@@ -171,8 +173,7 @@
         $(document).ready(function() {
             placeHearts();
         });
-		google.charts.load('current', {'packages':['sankey','corechart', 'bar', 'calendar']});
-		google.charts.setOnLoadCallback(drawCharts);
+		
 
 		/* función que carga cada uno de los gráficos */
 		function drawCharts() {
@@ -182,7 +183,7 @@
 		function drawChartP2() {
 			/* Cargamos los datos */
 			var data = google.visualization.arrayToDataTable([
-				['From', 'To', 'Weight'],
+				['From', 'Weight'],
 					[ 'A', 5 ],
 					[ 'A', 7 ],
 					[ 'A', 6 ],
@@ -195,7 +196,10 @@
 			var chart = new google.visualization.BarChart(document.getElementById('p2Chart'));
 
 			/* Finalmente pintamos la visualización, el segundo parámetro son las opciones */
-			chart.draw(data, { });
+			chart.draw(data, {
+			backgroundcolor: 'transparent'
+			legend: 'bottom'
+			});
 			}
 
     </script>
