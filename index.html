@@ -9,23 +9,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"
         integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js" type="text/javascript" defer></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="charts.js"></script>
     <link rel="stylesheet" href="style.css">
 
-    <title>Azucar Al Gusto 2.0</title>
+    <title>Azucar Al Gusto 2.1</title>
     <style>
         body {
             text-align: center;
             background-color: #FFFBF1;
             font-family: 'Book Antiqua', serif;
             color: #6E3420;
-            position: relative;
-            overflow: auto;
+            position: relative; /* Enable positioning for heart placement */
+            overflow: auto; /* Allow scrolling */
+        }
+
+        /* Estilos para los corazones */
+        .heart {
+            position: fixed; /* Mantenerlos fijos en la ventana */
+            pointer-events: none; /* Evitar interferencia con clics */
+            z-index: 0; /* Asegurarse de que están detrás del contenido */
         }
 
         h1 {
             margin-top: 20px;
             font-size: 40px;
+            position: relative; /* Para asegurarse de que está encima de los corazones */
+            z-index: 1; /* Más alto que los corazones */
         }
 
         .banner {
@@ -33,12 +44,14 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            background-color: #FFFBF1;
+            background-color: #FFFBF1; /* Mantener background color */
+            position: relative; /* Enable positioning for the logo */
+            z-index: 1; /* Más alto que los corazones */
         }
 
         .banner img {
-            height: 75px;
-            margin-right: 10px;
+            height: 75px; /* Logo height */
+            margin-right: 10px; /* Space between logo and title */
         }
 
         .dashboard-wrapper {
@@ -47,6 +60,8 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-gap: 15px;
+            position: relative; /* Para asegurarse de que está encima de los corazones */
+            z-index: 1; /* Más alto que los corazones */
         }
 
         .panel {
@@ -65,6 +80,8 @@
         .bottom {
             font-size: 10px;
             margin-top: 15px;
+            position: relative; /* Para asegurarse de que está encima de los corazones */
+            z-index: 1; /* Más alto que los corazones */
         }
 
         .bottom a {
@@ -110,7 +127,54 @@
         google.charts.setOnLoadCallback(init);
 
         function init() {
+            placeHearts();
             drawCharts();
+        }
+
+        // Function to place hearts randomly in the background
+        function placeHearts() {
+            const body = document.body;
+            const heartUrl = "https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/3b3b3942e43128d828d7bfecad8587dda05199e4/Fondo%20corazones.svg";
+            const heartCount = 100; // Number of hearts to place
+            const heartSize = 15; // Size of each heart
+            const hearts = []; // Array to store heart positions
+
+            // Function to check if a position is valid (100px away from other hearts)
+            function isValidPosition(x, y) {
+                for (let heart of hearts) {
+                    const dx = heart.x - x;
+                    const dy = heart.y - y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        return false; // Too close to another heart
+                    }
+                }
+                return true; // Valid position
+            }
+
+            for (let i = 0; i < heartCount; i++) {
+                let x, y;
+
+                // Find a valid position for the heart
+                do {
+                    x = Math.random() * (window.innerWidth - heartSize);
+                    y = Math.random() * (window.innerHeight - heartSize);
+                } while (!isValidPosition(x, y));
+
+                // Store the heart's position
+                hearts.push({ x, y });
+
+                const heart = document.createElement('img');
+                heart.src = heartUrl;
+                heart.className = 'heart'; // Add class for styling
+                heart.style.width = heartSize + 'px';
+                heart.style.height = heartSize + 'px';
+
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+
+                body.appendChild(heart);
+            }
         }
 
         function drawCharts() {
@@ -118,7 +182,7 @@
         }
 
         function drawChartP2() {
-            // Datos de ejemplo para la gráfica
+            /* Cargamos los datos */
             var data = google.visualization.arrayToDataTable([
                 ['From', 'Weight'],
                 ['A', 5],
@@ -135,6 +199,7 @@
             });
         }
     </script>
+
 </body>
 
 </html>

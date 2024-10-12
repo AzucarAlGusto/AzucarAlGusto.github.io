@@ -1,10 +1,11 @@
-// Google Sheet ID y nombre de la hoja
+// Google Sheet ID and sheet name
 const sheetId = "17SZ8KjBhX-NmU0sdffXtK-GA_uvM9Ctzec2q4y84QVU";
 const sheetName = encodeURIComponent("Ventas");
 const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`;
+alert("Versión 2.1");
 
+// Load data using jQuery
 $(document).ready(function() {
-    // Cargar los datos del Google Sheet
     $.ajax({
         type: "GET",
         url: sheetURL,
@@ -13,25 +14,25 @@ $(document).ready(function() {
             var data = $.csv.toObjects(response);
             console.log(data);
             
-            // Renderizar la tabla y las gráficas
+            // Render table and charts
             renderTable(data);
             drawCharts(data);
         },
         error: function (error) {
-            console.error("Error al cargar los datos:", error);
+            console.error("Error loading data:", error);
         }
     });
 });
 
 function renderTable(data) {
-    // Renderizar los datos en formato de tabla
+    // Render the data in the table format
     const table = $('#dataTable');
-    table.empty(); // Limpiar los datos previos
+    table.empty(); // Clear previous data
 
-    // Añadir la fila de encabezado
+    // Add header row
     table.append('<tr><th>Fecha</th><th>Postre</th><th>Cantidad</th><th>Precio</th></tr>');
 
-    // Añadir cada fila de datos
+    // Add each row of data
     data.forEach(row => {
         const tr = $('<tr>').append(
             $('<td>').text(row.Fecha),
@@ -44,7 +45,7 @@ function renderTable(data) {
 }
 
 function drawCharts(data) {
-    // Lógica de ejemplo para dibujar una gráfica
+    // Example chart drawing logic
     const chartData = google.visualization.arrayToDataTable(data.map(item => [item.Postre, parseInt(item.Cantidad)]));
 
     const options = {
