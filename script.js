@@ -12,10 +12,9 @@ $.ajax({
         var data = $.csv.toObjects(response);
         console.log(data);
         
-        // Render table and charts
+        // Render table
         renderTable(data);
         drawCharts(data);
-        drawTableChart(data);
     },
 });
 
@@ -23,8 +22,8 @@ $.ajax({
 function renderTable(data) {
     let tableHtml = '<table border="1"><thead><tr>';
     
-    // Assuming the first object has the keys we want as headers
-    const headers = Object.keys(data[0]);
+    // Column headers
+    const headers = ["Date", "Dia", "Postre Vendido", "Precio", "Costo", "Ganancia"];
     headers.forEach(header => {
         tableHtml += `<th>${header}</th>`;
     });
@@ -46,55 +45,99 @@ function renderTable(data) {
 
 // Function to draw charts
 function drawCharts(data) {
-    google.charts.load('current', { 'packages': ['corechart', 'bar', 'table'] });
+    google.charts.load('current', { 'packages': ['corechart', 'bar'] });
     google.charts.setOnLoadCallback(() => {
-        drawTableChart(data);
-        drawBarChart(data);
-        drawPieChart(data);
-        drawAreaChart(data);
+        drawSalesChart(data);
+        drawDessertSalesChart(data);
+        drawPriceChart(data);
+        drawProfitChart(data);
     });
 }
 
-// Function to draw the table chart for desserts sold
-function drawTableChart(data) {
-    const dessertData = {};
+// Function to draw a sales chart
+function drawSalesChart(data) {
+    const salesData = new google.visualization.DataTable();
+    salesData.addColumn('string', 'Dia');
+    salesData.addColumn('number', 'Ventas');
 
-    // Aggregate data for desserts sold
+    // Aggregate sales by day
+    const salesByDay = {};
     data.forEach(row => {
-        const postre = row['Postre Vendido'];
-        const cantidad = Number(row['Precio']); // You might want to change this to "piezas vendidas" if you have that info
-        if (dessertData[postre]) {
-            dessertData[postre] += cantidad;
-        } else {
-            dessertData[postre] = cantidad;
-        }
+        const day = row['Dia'];
+        const sales = Number(row['Ganancia']);
+        salesByDay[day] = (salesByDay[day] || 0) + sales;
     });
 
-    // Convert aggregated data into an array for Google Charts
-    const chartData = [['Postre Vendido', 'Piezas Vendidas']];
-    for (const postre in dessertData) {
-        chartData.push([postre, dessertData[postre]]);
+    for (const day in salesByDay) {
+        salesData.addRow([day, salesByDay[day]]);
     }
 
-    // Sort data alphabetically by postre
-    chartData.sort((a, b) => a[0].localeCompare(b[0]));
-
-    const dataTable = google.visualization.arrayToDataTable(chartData);
-
-    // Draw the table
-    const table = new google.visualization.Table(document.getElementById('p5Chart'));
-    table.draw(dataTable, { showRowNumber: true, width: '100%', height: '100%' });
+    const salesChart = new google.visualization.ColumnChart(document.getElementById('p2Chart'));
+    salesChart.draw(salesData, { title: 'Ventas Totales por Día', width: '100%', height: 400 });
 }
 
-// Example functions to draw other types of charts
-function drawBarChart(data) {
-    // Implement based on your specific needs
+// Function to draw a dessert sales chart
+function drawDessertSalesChart(data) {
+    const dessertData = new google.visualization.DataTable();
+    dessertData.addColumn('string', 'Postre');
+    dessertData.addColumn('number', 'Cantidad Vendida');
+
+    // Aggregate sales by dessert
+    const dessertSales = {};
+    data.forEach(row => {
+        const dessert = row['Postre Vendido'];
+        const quantity = Number(row['Ganancia']); // or whatever metric to track
+        dessertSales[dessert] = (dessertSales[dessert] || 0) + quantity;
+    });
+
+    for (const dessert in dessertSales) {
+        dessertData.addRow([dessert, dessertSales[dessert]]);
+    }
+
+    const dessertChart = new google.visualization.PieChart(document.getElementById('p3Chart'));
+    dessertChart.draw(dessertData, { title: 'Postres Vendidos', width: '100%', height: 400 });
 }
 
-function drawPieChart(data) {
-    // Implement based on your specific needs
+// Function to draw a price chart
+function drawPriceChart(data) {
+    const priceData = new google.visualization.DataTable();
+    priceData.addColumn('string', 'Postre');
+    priceData.addColumn('number', 'Precio');
+
+    // Aggregate prices
+    const prices = {};
+    data.forEach(row => {
+        const dessert = row['Postre Vendido'];
+        const price = Number(row['Precio']);
+        prices[dessert] = price;
+    });
+
+    for (const dessert in prices) {
+        priceData.addRow([dessert, prices[dessert]]);
+    }
+
+    const priceChart = new google.visualization.BarChart(document.getElementById('p4Chart'));
+    priceChart.draw(priceData, { title: 'Precios de Postres', width: '100%', height: 400 });
 }
 
-function drawAreaChart(data) {
-    // Implement based on your specific needs
+// Function to draw a profit chart
+function drawProfitChart(data) {
+    const profitData = new google.visualization.DataTable();
+    profitData.addColumn('string', 'Postre');
+    profitData.addColumn('number', 'Ganancia');
+
+    // Aggregate profits
+    const profits = {};
+    data.forEach(row => {
+        const dessert = row['Postre Vendido'];
+        const profit = Number(row['Ganancia']);
+        profits[dessert] = (profits[dessert] || 0) + profit;
+    });
+
+    for (const dessert in profits) {
+        profitData.addRow([dessert, profits[dessert]]);
+    }
+
+    const profitChart = new google.visualization.ColumnChart(document.getElementById('p5Chart'));
+    profitChart.draw(profitData, { title: 'Ganancias Totales por Postre', width: '100%', height: 400 });
 }

@@ -10,10 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"
         integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js" type="text/javascript" defer></script>
 
-    <title>Dashboard con CSV</title>
+    <title>Dashboard de Ventas</title>
     <style>
         body {
             text-align: center;
@@ -21,10 +20,12 @@
             font-family: 'Book Antiqua', serif;
             color: #6E3420;
         }
+
         h1 {
             margin-top: 20px;
             font-size: 40px;
         }
+
         .dashboard-wrapper {
             margin: auto;
             max-width: 920px;
@@ -32,6 +33,7 @@
             grid-template-columns: 1fr 1fr 1fr;
             grid-gap: 15px;
         }
+
         .panel {
             text-align: left;
             background-color: #fff;
@@ -39,13 +41,17 @@
             box-shadow: 0 0 4px 1px rgba(143,143,143,.2);
             padding: 15px;
         }
-        #p1.panel, #p5.panel {
+
+        #p1.panel,
+        #p5.panel {
             grid-column: 1 / 4;
         }
+
         .bottom {
             font-size: 10px;
             margin-top: 15px;
         }
+
         .bottom a {
             color: #333;
             text-decoration: none;
@@ -57,23 +63,23 @@
     <h1>Azúcar al Gusto</h1>
     <div class="dashboard-wrapper">
         <div id="p1" class="panel">
-            <h2>Tabla de Datos</h2>
+            <h2>Tabla de Ventas</h2>
             <div id="p1Chart"></div>
         </div>
         <div id="p2" class="panel">
-            <h2>Gráfico de Barras</h2>
+            <h2>Gráfico de Ventas</h2>
             <div id="p2Chart"></div>
         </div>
         <div id="p3" class="panel">
-            <h2>Gráfico Circular</h2>
+            <h2>Gráfico de Postres Vendidos</h2>
             <div id="p3Chart"></div>
         </div>
         <div id="p4" class="panel">
-            <h2>Gráfico de Área</h2>
+            <h2>Gráfico de Precios</h2>
             <div id="p4Chart"></div>
         </div>
         <div id="p5" class="panel">
-            <h2>Gráfico de Tablas</h2>
+            <h2>Gráfico de Ganancias</h2>
             <div id="p5Chart"></div>
         </div>
     </div>
