@@ -105,37 +105,59 @@
     <div class="bottom"><a target="_blank" href="">Creado por [Tu Nombre]</a></div>
 
     <script>
-        // Function to place hearts randomly in the background
-        function placeHearts() {
-            const body = document.body;
-            const heartUrl = "https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/3b3b3942e43128d828d7bfecad8587dda05199e4/Fondo%20corazones.svg";
-            const heartCount = 100; // Number of hearts to place
-            const heartSize = 15; // Size of each heart
+    // Function to place hearts randomly in the background
+    function placeHearts() {
+        const body = document.body;
+        const heartUrl = "https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/3b3b3942e43128d828d7bfecad8587dda05199e4/Fondo%20corazones.svg";
+        const heartCount = 100; // Number of hearts to place
+        const heartSize = 15; // Size of each heart
+        const hearts = []; // Array to store heart positions
 
-            for (let i = 0; i < heartCount; i++) {
-                const heart = document.createElement('img');
-                heart.src = heartUrl;
-                heart.style.position = 'absolute';
-                heart.style.width = heartSize + 'px';
-                heart.style.height = heartSize + 'px';
-                heart.style.pointerEvents = 'none'; // Avoid interference with clicks
-
-                // Random positions with at least 200px between hearts
-                const x = Math.random() * (window.innerWidth - 200) + 100;
-                const y = Math.random() * (window.innerHeight - 200) + 100;
-
-                heart.style.left = x + 'px';
-                heart.style.top = y + 'px';
-
-                body.appendChild(heart);
+        // Function to check if a position is valid (100px away from other hearts)
+        function isValidPosition(x, y) {
+            for (let heart of hearts) {
+                const dx = heart.x - x;
+                const dy = heart.y - y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 100) {
+                    return false; // Too close to another heart
+                }
             }
+            return true; // Valid position
         }
 
-        // Call the function to place hearts when the document is ready
-        $(document).ready(function() {
-            placeHearts();
-        });
-    </script>
+        for (let i = 0; i < heartCount; i++) {
+            let x, y;
+
+            // Find a valid position for the heart
+            do {
+                x = Math.random() * (window.innerWidth - heartSize);
+                y = Math.random() * (window.innerHeight - heartSize);
+            } while (!isValidPosition(x, y));
+
+            // Store the heart's position
+            hearts.push({ x, y });
+
+            const heart = document.createElement('img');
+            heart.src = heartUrl;
+            heart.style.position = 'absolute';
+            heart.style.width = heartSize + 'px';
+            heart.style.height = heartSize + 'px';
+            heart.style.pointerEvents = 'none'; // Avoid interference with clicks
+
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+
+            body.appendChild(heart);
+        }
+    }
+
+    // Call the function to place hearts when the document is ready
+    $(document).ready(function() {
+        placeHearts();
+    });
+</script>
+
 </body>
 
 </html>
