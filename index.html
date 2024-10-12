@@ -11,8 +11,9 @@
         integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <title>Azucar Al Gusto 3</title>
+    <title>Actividad 8 UVM</title>
     <style>
         body {
             text-align: center;
@@ -117,7 +118,7 @@
         </div>
     </div>
 
-    <div class="bottom"><a target="_blank" href="">Creado por [Tu Nombre]</a></div>
+    <div class="bottom"><a target="_blank" href="">Fabrizio Caceres</a></div>
 
     <script>
         // Function to place hearts randomly in the background
@@ -170,6 +171,33 @@
         $(document).ready(function() {
             placeHearts();
         });
+		google.charts.load('current', {'packages':['sankey','corechart', 'bar', 'calendar']});
+		google.charts.setOnLoadCallback(drawCharts);
+
+		/* función que carga cada uno de los gráficos */
+		function drawCharts() {
+			drawChartP2();
+			}
+
+		function drawChartP2() {
+			/* Cargamos los datos */
+			var data = google.visualization.arrayToDataTable([
+				['From', 'To', 'Weight'],
+					[ 'A', 5 ],
+					[ 'A', 7 ],
+					[ 'A', 6 ],
+					[ 'B', 2 ],
+					[ 'B', 9 ],
+					[ 'B', 4 ]
+				]);
+
+			/* Creamos la visualización, en este caso se visualizará en el div con id 'p1Chart' */
+			var chart = new google.visualization.BarChart(document.getElementById('p2Chart'));
+
+			/* Finalmente pintamos la visualización, el segundo parámetro son las opciones */
+			chart.draw(data, { });
+			}
+
     </script>
 
 </body>
