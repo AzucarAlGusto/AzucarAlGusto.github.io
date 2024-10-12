@@ -2,74 +2,57 @@
 const sheetId = "17SZ8KjBhX-NmU0sdffXtK-GA_uvM9Ctzec2q4y84QVU";
 const sheetName = encodeURIComponent("Ventas");
 const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`;
-alert("Versión 1.1");
+alert("Versión 1.8");
 
 // Load data using jQuery
-$.ajax({
-    type: "GET",
-    url: sheetURL,
-    dataType: "text",
-    success: function (response) {
-        var data = $.csv.toObjects(response);
-        console.log(data);
-        
-        // Render table and charts
-        renderTable(data);
-        drawCharts(data);
-        drawTableChart(data);
-        
-        // Call the function to generate the postres vendidos table
-        generatePostresTable(data);
-    },
-});
-
-// Function to render table data
-function renderTable(data) {
-    let tableHtml = '<table border="1"><thead><tr>';
-    
-    // Assuming the first object has the keys we want as headers
-    const headers = Object.keys(data[0]);
-    headers.forEach(header => {
-        tableHtml += `<th>${header}</th>`;
-    });
-    tableHtml += '</tr></thead><tbody>';
-    
-    // Populate the table with data
-    data.forEach(row => {
-        tableHtml += '<tr>';
-        headers.forEach(header => {
-            tableHtml += `<td>${row[header]}</td>`;
-        });
-        tableHtml += '</tr>';
-    });
-    tableHtml += '</tbody></table>';
-    
-    // Insert table HTML into the page
-    $('#p1Chart').html(tableHtml);
-}
-
-// Function to generate table for unique postres vendidos and their count
-function generatePostresTable(data) {
-    // Create a map to store postres and their counts
-    const postresCount = {};
-
-    // Count occurrences of each postre
-    data.forEach(row => {
-        const postre = row["postres vendidos"]; // Assumes the column is named "postres vendidos"
-        if (postre) { // Check if postre is defined
-            postresCount[postre] = (postresCount[postre] || 0) + 1; // Increment count
+$(document).ready(function() {
+    $.ajax({
+        type: "GET",
+        url: sheetURL,
+        dataType: "text",
+        success: function (response) {
+            var data = $.csv.toObjects(response);
+            console.log(data);
+            
+            // Render table and charts
+            renderTable(data);
+            drawCharts(data);
+        },
+        error: function (error) {
+            console.error("Error loading data:", error);
         }
     });
+});
 
-    // Create HTML for the new table
-    let postresTableHtml = '<table border="1"><thead><tr><th>Postres</th><th>No. Ventas</th></tr></thead><tbody>';
+function renderTable(data) {
+    // Render the data in the table format
+    const table = $('#dataTable');
+    table.empty(); // Clear previous data
 
-    // Populate the table with postres and their counts
-    for (const postre in postresCount) {
-        postresTableHtml += `<tr><td>${postre}</td><td>${postresCount[postre]}</td></tr>`;
-    }
-    postresTableHtml += '</tbody></table>';
+    // Add header row
+    table.append('<tr><th>Fecha</th><th>Postre</th><th>Cantidad</th><th>Precio</th></tr>');
 
-    // Insert the new table HTML into the page
-    $('#p2Chart').html(postresTableHtml);
+    // Add each row of data
+    data.forEach(row => {
+        const tr = $('<tr>').append(
+            $('<td>').text(row.Fecha),
+            $('<td>').text(row.Postre),
+            $('<td>').text(row.Cantidad),
+            $('<td>').text(row.Precio)
+        );
+        table.append(tr);
+    });
+}
+
+function drawCharts(data) {
+    // Example chart drawing logic
+    const chartData = google.visualization.arrayToDataTable(data.map(item => [item.Postre, parseInt(item.Cantidad)]));
+
+    const options = {
+        title: 'Cantidad de Postres Vendidos',
+        pieHole: 0.4,
+    };
+
+    const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    chart.draw(chartData, options);
 }

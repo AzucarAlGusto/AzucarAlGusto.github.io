@@ -3,18 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"
         integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script src="charts.js"></script> 
-	<link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="charts.js"></script>
+    <link rel="stylesheet" href="style.css">
 
-    <title>Azucar Al Gusto 1.7</title>
+    <title>Azucar Al Gusto 1.8</title>
     <style>
         body {
             text-align: center;
@@ -122,8 +122,15 @@
     <div class="bottom"><a target="_blank" href="">Creado por [Tu Nombre]</a></div>
 
     <script>
-		google.charts.load('current', {'packages':['sankey','corechart', 'bar', 'calendar']});
-		google.charts.setOnLoadCallback(drawCharts);
+        // Cargar Google Charts
+        google.charts.load('current', { 'packages': ['sankey', 'corechart', 'bar', 'calendar'] });
+        google.charts.setOnLoadCallback(init);
+
+        function init() {
+            placeHearts();
+            drawCharts();
+        }
+
         // Function to place hearts randomly in the background
         function placeHearts() {
             const body = document.body;
@@ -170,32 +177,27 @@
             }
         }
 
-        // Call the function to place hearts when the document is ready
-        $(document).ready(function() {
-            placeHearts();
-        });
-		function drawCharts() {
-			drawChartP2();
-			}
+        function drawCharts() {
+            drawChartP2();
+        }
 
-		function drawChartP2() {
-			/* Cargamos los datos */
-			var data = google.visualization.arrayToDataTable([
-					['From', 'Weight'],
-					[ 'A', 5 ],
-					[ 'A', 7 ],
-					[ 'A', 6 ],
-					[ 'B', 2 ],
-					[ 'B', 9 ],
-					[ 'B', 4 ]
-				]);
-			var chart = new google.visualization.BarChart(document.getElementById('p2Chart'));
-			chart.draw(data, {
-			backgroundColor: 'transparent',
-			legend: 'bottom'
-			});
-			}
-			
+        function drawChartP2() {
+            /* Cargamos los datos */
+            var data = google.visualization.arrayToDataTable([
+                ['From', 'Weight'],
+                ['A', 5],
+                ['A', 7],
+                ['A', 6],
+                ['B', 2],
+                ['B', 9],
+                ['B', 4]
+            ]);
+            var chart = new google.visualization.BarChart(document.getElementById('p2Chart'));
+            chart.draw(data, {
+                backgroundColor: 'transparent',
+                legend: 'bottom'
+            });
+        }
     </script>
 
 </body>
