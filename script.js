@@ -2,6 +2,7 @@
 const sheetId = "17SZ8KjBhX-NmU0sdffXtK-GA_uvM9Ctzec2q4y84QVU";
 const sheetName = encodeURIComponent("Ventas");
 const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`;
+alert("Versión 1");
 
 // Load data using jQuery
 $.ajax({
