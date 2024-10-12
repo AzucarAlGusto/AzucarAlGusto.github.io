@@ -12,7 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
 
-    <title>Azucar Al Gusto 1.1</title>
+    <title>Azucar Al Gusto 1.2</title>
     <style>
         body {
             text-align: center;
@@ -20,6 +20,17 @@
             font-family: 'Book Antiqua', serif;
             color: #6E3420;
             position: relative; /* Enable positioning for heart placement */
+            overflow: hidden; /* Prevent scrollbars from appearing */
+        }
+
+        .heart-container {
+            position: fixed; /* Fixed position for the heart background */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Avoid interference with clicks */
+            z-index: -1; /* Place behind all other content */
         }
 
         h1 {
@@ -47,6 +58,8 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-gap: 15px;
+            position: relative; /* Enable positioning for other content */
+            z-index: 1; /* Ensure content is above hearts */
         }
 
         .panel {
@@ -75,6 +88,8 @@
 </head>
 
 <body>
+    <div class="heart-container"></div> <!-- Container for static hearts -->
+    
     <div class="banner">
         <img src="https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/c40e9d831b36c07509097e64108a53359925adde/Logo%20Solo.svg" alt="Logo Azucar al Gusto">
         <h1>Azúcar al Gusto</h1>
@@ -107,7 +122,7 @@
     <script>
     // Function to place hearts randomly in the background
     function placeHearts() {
-        const body = document.body;
+        const heartContainer = document.querySelector('.heart-container');
         const heartUrl = "https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/3b3b3942e43128d828d7bfecad8587dda05199e4/Fondo%20corazones.svg";
         const heartCount = 100; // Number of hearts to place
         const heartSize = 15; // Size of each heart
@@ -148,7 +163,7 @@
             heart.style.left = x + 'px';
             heart.style.top = y + 'px';
 
-            body.appendChild(heart);
+            heartContainer.appendChild(heart); // Append to the heart container
         }
     }
 
@@ -156,7 +171,7 @@
     $(document).ready(function() {
         placeHearts();
     });
-</script>
+    </script>
 
 </body>
 
