@@ -12,9 +12,10 @@ $.ajax({
         var data = $.csv.toObjects(response);
         console.log(data);
         
-        // Render table
+        // Render table and charts
         renderTable(data);
         drawCharts(data);
+        drawTableChart(data);
     },
 });
 
@@ -43,7 +44,7 @@ function renderTable(data) {
     $('#p1Chart').html(tableHtml);
 }
 
-// Function to draw charts (You can adapt this as needed)
+// Function to draw charts
 function drawCharts(data) {
     google.charts.load('current', { 'packages': ['corechart', 'bar', 'table'] });
     google.charts.setOnLoadCallback(() => {
@@ -54,19 +55,38 @@ function drawCharts(data) {
     });
 }
 
+// Function to draw the table chart for desserts sold
 function drawTableChart(data) {
-    const dataTable = new google.visualization.DataTable();
-    dataTable.addColumn('string', 'Nombre'); // Change 'Nombre' to the appropriate column name
-    dataTable.addColumn('number', 'Cantidad'); // Change 'Cantidad' to the appropriate column name
+    const dessertData = {};
+
+    // Aggregate data for desserts sold
     data.forEach(row => {
-        dataTable.addRow([row['Nombre'], Number(row['Cantidad'])]); // Adjust based on your data
+        const postre = row['Postre Vendido'];
+        const cantidad = Number(row['Precio']); // You might want to change this to "piezas vendidas" if you have that info
+        if (dessertData[postre]) {
+            dessertData[postre] += cantidad;
+        } else {
+            dessertData[postre] = cantidad;
+        }
     });
 
-    const table = new google.visualization.Table(document.getElementById('p1Chart'));
+    // Convert aggregated data into an array for Google Charts
+    const chartData = [['Postre Vendido', 'Piezas Vendidas']];
+    for (const postre in dessertData) {
+        chartData.push([postre, dessertData[postre]]);
+    }
+
+    // Sort data alphabetically by postre
+    chartData.sort((a, b) => a[0].localeCompare(b[0]));
+
+    const dataTable = google.visualization.arrayToDataTable(chartData);
+
+    // Draw the table
+    const table = new google.visualization.Table(document.getElementById('p5Chart'));
     table.draw(dataTable, { showRowNumber: true, width: '100%', height: '100%' });
 }
 
-// Example functions to draw different types of charts
+// Example functions to draw other types of charts
 function drawBarChart(data) {
     // Implement based on your specific needs
 }
