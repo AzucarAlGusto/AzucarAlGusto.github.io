@@ -12,7 +12,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
 
-    <title>Azucar Al Gusto 1.4</title>
+    <title>Azucar Al Gusto 1.5</title>
     <style>
         body {
             text-align: center;
@@ -120,6 +120,8 @@
     <div class="bottom"><a target="_blank" href="">Creado por [Tu Nombre]</a></div>
 
     <script>
+		google.charts.load('current', {'packages':['sankey','corechart', 'bar', 'calendar']});
+		google.charts.setOnLoadCallback(drawCharts);
         // Function to place hearts randomly in the background
         function placeHearts() {
             const body = document.body;
@@ -170,6 +172,25 @@
         $(document).ready(function() {
             placeHearts();
         });
+		function drawCharts() {
+			p2Chart();
+			}
+
+		function p2Chart() {
+			/* Cargamos los datos */
+			var data = google.visualization.arrayToDataTable([
+				['From', 'To', 'Weight'],
+					[ 'A', 'X', 5 ],
+					[ 'A', 'Y', 7 ],
+					[ 'A', 'Z', 6 ],
+					[ 'B', 'X', 2 ],
+					[ 'B', 'Y', 9 ],
+					[ 'B', 'Z', 4 ]
+				]);
+			var chart = new google.visualization.Sankey(document.getElementById('p1Chart'));
+			chart.draw(data, { });
+			}
+			
     </script>
 
 </body>
