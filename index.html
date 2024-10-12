@@ -3,16 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"
         integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="charts.js"></script> 
+	<link rel="stylesheet" href="style.css">
 
-    <title>Azucar Al Gusto 1.5</title>
+    <title>Azucar Al Gusto 1.7</title>
     <style>
         body {
             text-align: center;
@@ -173,22 +175,25 @@
             placeHearts();
         });
 		function drawCharts() {
-			p2Chart();
+			drawChartP2();
 			}
 
-		function p2Chart() {
+		function drawChartP2() {
 			/* Cargamos los datos */
 			var data = google.visualization.arrayToDataTable([
-				['From', 'To', 'Weight'],
-					[ 'A', 'X', 5 ],
-					[ 'A', 'Y', 7 ],
-					[ 'A', 'Z', 6 ],
-					[ 'B', 'X', 2 ],
-					[ 'B', 'Y', 9 ],
-					[ 'B', 'Z', 4 ]
+					['From', 'Weight'],
+					[ 'A', 5 ],
+					[ 'A', 7 ],
+					[ 'A', 6 ],
+					[ 'B', 2 ],
+					[ 'B', 9 ],
+					[ 'B', 4 ]
 				]);
-			var chart = new google.visualization.Sankey(document.getElementById('p1Chart'));
-			chart.draw(data, { });
+			var chart = new google.visualization.BarChart(document.getElementById('p2Chart'));
+			chart.draw(data, {
+			backgroundColor: 'transparent',
+			legend: 'bottom'
+			});
 			}
 			
     </script>
