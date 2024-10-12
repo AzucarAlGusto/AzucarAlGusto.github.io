@@ -12,18 +12,33 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
 
-    <title>Azucar Al Gusto 1.0</title>
+    <title>Azucar Al Gusto 1.1</title>
     <style>
         body {
             text-align: center;
             background-color: #FFFBF1;
             font-family: 'Book Antiqua', serif;
             color: #6E3420;
+            position: relative; /* Enable positioning for heart placement */
         }
 
         h1 {
             margin-top: 20px;
             font-size: 40px;
+        }
+
+        .banner {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #FFFBF1; /* Maintain background color */
+            position: relative; /* Enable positioning for the logo */
+        }
+
+        .banner img {
+            height: 50px; /* Logo height */
+            margin-right: 10px; /* Space between logo and title */
         }
 
         .dashboard-wrapper {
@@ -38,7 +53,7 @@
             text-align: left;
             background-color: #fff;
             border: 1px solid #d3d3d3;
-            box-shadow: 0 0 4px 1px rgba(143,143,143,.2);
+            box-shadow: 0 0 4px 1px rgba(143, 143, 143, .2);
             padding: 15px;
         }
 
@@ -60,7 +75,10 @@
 </head>
 
 <body>
-    <h1>Azúcar al Gusto</h1>
+    <div class="banner">
+        <img src="https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/c40e9d831b36c07509097e64108a53359925adde/Logo%20Solo.svg" alt="Logo Azucar al Gusto">
+        <h1>Azúcar al Gusto</h1>
+    </div>
     <div class="dashboard-wrapper">
         <div id="p1" class="panel">
             <h2>Tabla de Ventas</h2>
@@ -85,6 +103,39 @@
     </div>
 
     <div class="bottom"><a target="_blank" href="">Creado por [Tu Nombre]</a></div>
+
+    <script>
+        // Function to place hearts randomly in the background
+        function placeHearts() {
+            const body = document.body;
+            const heartUrl = "https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/3b3b3942e43128d828d7bfecad8587dda05199e4/Fondo%20corazones.svg";
+            const heartCount = 100; // Number of hearts to place
+            const heartSize = 15; // Size of each heart
+
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('img');
+                heart.src = heartUrl;
+                heart.style.position = 'absolute';
+                heart.style.width = heartSize + 'px';
+                heart.style.height = heartSize + 'px';
+                heart.style.pointerEvents = 'none'; // Avoid interference with clicks
+
+                // Random positions with at least 200px between hearts
+                const x = Math.random() * (window.innerWidth - 200) + 100;
+                const y = Math.random() * (window.innerHeight - 200) + 100;
+
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+
+                body.appendChild(heart);
+            }
+        }
+
+        // Call the function to place hearts when the document is ready
+        $(document).ready(function() {
+            placeHearts();
+        });
+    </script>
 </body>
 
 </html>
