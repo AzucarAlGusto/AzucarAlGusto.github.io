@@ -1,35 +1,33 @@
-// Google Sheet ID and sheet name
-const sheetId = "17SZ8KjBhX-NmU0sdffXtK-GA_uvM9Ctzec2q4y84QVU";
-const sheetName = encodeURIComponent("Ventas");
-const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`;
+// URL del archivo CSV
+const sheetURL = "URL_DEL_ARCHIVO_CSV";
 
-// Load data using jQuery
+// Cargar los datos usando jQuery
 $.ajax({
     type: "GET",
     url: sheetURL,
     dataType: "text",
     success: function (response) {
-        var data = $.csv.toObjects(response);
+        const data = $.csv.toObjects(response);
         console.log(data);
         
-        // Render table
+        // Renderizar la tabla
         renderTable(data);
         drawCharts(data);
     },
 });
 
-// Function to render table data
+// Función para renderizar los datos en una tabla
 function renderTable(data) {
     let tableHtml = '<table border="1"><thead><tr>';
     
-    // Column headers
+    // Encabezados de columnas
     const headers = ["Date", "Dia", "Postre Vendido", "Precio", "Costo", "Ganancia"];
     headers.forEach(header => {
         tableHtml += `<th>${header}</th>`;
     });
     tableHtml += '</tr></thead><tbody>';
     
-    // Populate the table with data
+    // Poblamos la tabla con los datos
     data.forEach(row => {
         tableHtml += '<tr>';
         headers.forEach(header => {
@@ -39,11 +37,11 @@ function renderTable(data) {
     });
     tableHtml += '</tbody></table>';
     
-    // Insert table HTML into the page
+    // Insertar el HTML de la tabla en la página
     $('#p1Chart').html(tableHtml);
 }
 
-// Function to draw charts
+// Función para dibujar gráficos
 function drawCharts(data) {
     google.charts.load('current', { 'packages': ['corechart', 'bar'] });
     google.charts.setOnLoadCallback(() => {
@@ -54,13 +52,13 @@ function drawCharts(data) {
     });
 }
 
-// Function to draw a sales chart
+// Función para dibujar un gráfico de ventas
 function drawSalesChart(data) {
     const salesData = new google.visualization.DataTable();
     salesData.addColumn('string', 'Dia');
     salesData.addColumn('number', 'Ventas');
 
-    // Aggregate sales by day
+    // Agregar las ventas por día
     const salesByDay = {};
     data.forEach(row => {
         const day = row['Dia'];
@@ -76,17 +74,17 @@ function drawSalesChart(data) {
     salesChart.draw(salesData, { title: 'Ventas Totales por Día', width: '100%', height: 400 });
 }
 
-// Function to draw a dessert sales chart
+// Función para dibujar un gráfico de postres vendidos
 function drawDessertSalesChart(data) {
     const dessertData = new google.visualization.DataTable();
     dessertData.addColumn('string', 'Postre');
     dessertData.addColumn('number', 'Cantidad Vendida');
 
-    // Aggregate sales by dessert
+    // Agregar ventas por postre
     const dessertSales = {};
     data.forEach(row => {
         const dessert = row['Postre Vendido'];
-        const quantity = Number(row['Ganancia']); // or whatever metric to track
+        const quantity = 1; // Contar cada entrada como una unidad vendida
         dessertSales[dessert] = (dessertSales[dessert] || 0) + quantity;
     });
 
@@ -98,13 +96,13 @@ function drawDessertSalesChart(data) {
     dessertChart.draw(dessertData, { title: 'Postres Vendidos', width: '100%', height: 400 });
 }
 
-// Function to draw a price chart
+// Función para dibujar un gráfico de precios
 function drawPriceChart(data) {
     const priceData = new google.visualization.DataTable();
     priceData.addColumn('string', 'Postre');
     priceData.addColumn('number', 'Precio');
 
-    // Aggregate prices
+    // Agregar precios
     const prices = {};
     data.forEach(row => {
         const dessert = row['Postre Vendido'];
@@ -120,13 +118,13 @@ function drawPriceChart(data) {
     priceChart.draw(priceData, { title: 'Precios de Postres', width: '100%', height: 400 });
 }
 
-// Function to draw a profit chart
+// Función para dibujar un gráfico de ganancias
 function drawProfitChart(data) {
     const profitData = new google.visualization.DataTable();
     profitData.addColumn('string', 'Postre');
     profitData.addColumn('number', 'Ganancia');
 
-    // Aggregate profits
+    // Agregar ganancias
     const profits = {};
     data.forEach(row => {
         const dessert = row['Postre Vendido'];
