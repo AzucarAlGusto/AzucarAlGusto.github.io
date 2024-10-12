@@ -12,9 +12,10 @@ $.ajax({
         var data = $.csv.toObjects(response);
         console.log(data);
         
-        // Render table
+        // Render table and charts
         renderTable(data);
         drawCharts(data);
+        drawTableChart(data);
     },
 });
 
@@ -22,8 +23,8 @@ $.ajax({
 function renderTable(data) {
     let tableHtml = '<table border="1"><thead><tr>';
     
-    // Column headers
-    const headers = ["Date", "Dia", "Postre Vendido", "Precio", "Costo", "Ganancia"];
+    // Assuming the first object has the keys we want as headers
+    const headers = Object.keys(data[0]);
     headers.forEach(header => {
         tableHtml += `<th>${header}</th>`;
     });
@@ -42,4 +43,3 @@ function renderTable(data) {
     // Insert table HTML into the page
     $('#p1Chart').html(tableHtml);
 }
-
