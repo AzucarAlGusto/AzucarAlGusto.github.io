@@ -2,7 +2,7 @@
 const sheetId = "17SZ8KjBhX-NmU0sdffXtK-GA_uvM9Ctzec2q4y84QVU";
 const sheetName = encodeURIComponent("Ventas");
 const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`;
-alert("Versión 1.2");
+alert("Versión 1.1");
 
 // Load data using jQuery
 $.ajax({
@@ -18,8 +18,8 @@ $.ajax({
         drawCharts(data);
         drawTableChart(data);
         
-        // Call the function to create the desserts sold table
-        createDessertsSoldTable(data);
+        // Call the function to generate the postres vendidos table
+        generatePostresTable(data);
     },
 });
 
@@ -48,35 +48,28 @@ function renderTable(data) {
     $('#p1Chart').html(tableHtml);
 }
 
-// Function to create a desserts sold table
-function createDessertsSoldTable(data) {
-    const dessertCounts = {}; // Object to hold dessert counts
+// Function to generate table for unique postres vendidos and their count
+function generatePostresTable(data) {
+    // Create a map to store postres and their counts
+    const postresCount = {};
 
-    // Count each dessert sold
+    // Count occurrences of each postre
     data.forEach(row => {
-        const dessertName = row["postres vendidos"]; // Replace with actual column name
-        if (dessertName) {
-            dessertCounts[dessertName] = (dessertCounts[dessertName] || 0) + 1;
+        const postre = row["postres vendidos"]; // Assumes the column is named "postres vendidos"
+        if (postre) { // Check if postre is defined
+            postresCount[postre] = (postresCount[postre] || 0) + 1; // Increment count
         }
     });
 
-    // Convert the dessertCounts object into an array for rendering
-    const dessertData = Object.entries(dessertCounts).map(([dessert, count]) => ({
-        "Postres": dessert,
-        "Pz Vendidas": count
-    }));
+    // Create HTML for the new table
+    let postresTableHtml = '<table border="1"><thead><tr><th>Postres</th><th>No. Ventas</th></tr></thead><tbody>';
 
-    // Render the dessert sold table
-    let dessertTableHtml = '<table border="1"><thead><tr><th>Postres</th><th>Pz Vendidas</th></tr></thead><tbody>';
-    
-    dessertData.forEach(row => {
-        dessertTableHtml += '<tr>';
-        dessertTableHtml += `<td>${row.Postres}</td>`;
-        dessertTableHtml += `<td>${row["Pz Vendidas"]}</td>`;
-        dessertTableHtml += '</tr>';
-    });
-    dessertTableHtml += '</tbody></table>';
-    
-    // Insert the dessert sold table HTML into the page
-    $('#p2Chart').html(dessertTableHtml);
+    // Populate the table with postres and their counts
+    for (const postre in postresCount) {
+        postresTableHtml += `<tr><td>${postre}</td><td>${postresCount[postre]}</td></tr>`;
+    }
+    postresTableHtml += '</tbody></table>';
+
+    // Insert the new table HTML into the page
+    $('#p2Chart').html(postresTableHtml);
 }
