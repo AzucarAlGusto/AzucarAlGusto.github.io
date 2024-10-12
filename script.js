@@ -94,7 +94,7 @@ function drawDessertSalesChart(data) {
         dessertData.addRow([dessert, dessertSales[dessert]]);
     }
 
-    const dessertChart = new google.visualization.PieChart(document.getElementById('p3Chart'));
+    const dessertChart = new google.visualization.BarChart(document.getElementById('p3Chart'));
     dessertChart.draw(dessertData, { title: 'Postres Vendidos', width: '100%', height: 400 });
 }
 
