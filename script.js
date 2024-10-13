@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-alert("V1.0");
+alert("Bienvenido a Azucar Al gusto");
   // Función general para obtener datos de la hoja y graficar
   const generateChart = ({sheetID, sheetName, query, chartType, elementID, dateColumn, valueColumn, chartTitle, customFirstColumn = "none", groupby = "no"}) => {
 
@@ -112,7 +112,7 @@ alert("V1.0");
     elementID: 'p2Chart',  // ID del div donde se mostrará el gráfico
     customFirstColumn: 'Postre Vendido',  // Nombre de la columna con fechas
     valueColumn: 'Ganancia',  // Nombre de la columna con valores numéricos
-    chartTitle: "p2",  // Título personalizado del gráfico
+    chartTitle: "$ / T",  // Título personalizado del gráfico
     groupby: "yes"  // Agrupar los valores por fecha
   });
   
@@ -124,7 +124,7 @@ alert("V1.0");
     elementID: 'p4Chart',  // ID del div donde se mostrará el gráfico
     customFirstColumn: 'Postre Vendido',  // Nombre de la columna con fechas
     valueColumn: 'Ganancia',  // Nombre de la columna con valores numéricos
-    chartTitle: "p4",  // Título personalizado del gráfico
+    chartTitle: "$ / %",  // Título personalizado del gráfico
     groupby: "yes"  // No agrupar los valores
   });
   
@@ -136,7 +136,7 @@ alert("V1.0");
     elementID: 'p3Chart',  // ID del div donde se mostrará el gráfico
     customFirstColumn: 'Dia',  // Nombre de la columna con fechas
     valueColumn: 'Precio',  // Nombre de la columna con valores numéricos
-    chartTitle: "p3",  // Título personalizado del gráfico
+    chartTitle: "Dia / $",  // Título personalizado del gráfico
     groupby: "yes"  // No agrupar los valores
   });
   
@@ -148,7 +148,7 @@ alert("V1.0");
     elementID: 'p5Chart',  // ID del div donde se mostrará el gráfico
     dateColumn: 'Date',  // Nombre de la columna con fechas
     valueColumn: 'Precio',  // Nombre de la columna con valores numéricos
-    chartTitle: "Ventas por Fecha",  // Título personalizado del gráfico
+    chartTitle: "$ / Dia",  // Título personalizado del gráfico
     groupby: "no"  // Agrupar los valores por fecha
   });
 
