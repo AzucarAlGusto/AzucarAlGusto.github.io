@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-
+alert("V1.0");
   // Función general para obtener datos de la hoja y graficar
   const generateChart = ({sheetID, sheetName, query, chartType, elementID, dateColumn, valueColumn, chartTitle, customFirstColumn = "none", groupby = "no"}) => {
 
@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       console.log("Datos recibidos: ", sheetData);
 
       // Cargar las librerías necesarias dependiendo del tipo de gráfico
-      google.charts.load('current', {'packages': ['sankey', 'corechart', 'bar', 'calendar']});
+      google.charts.load('current', {'packages': ['sankey', 'corechart', 'bar', 'calendar', 'Column']});
       google.charts.setOnLoadCallback(() => drawChart(chartType, sheetData));
 
       // Mapea los datos para usar la columna personalizada o la columna de fecha

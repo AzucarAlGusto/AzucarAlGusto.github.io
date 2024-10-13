@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+	<link rel="icon" href="data:,">
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -10,12 +11,9 @@
         integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" type="text/javascript" defer></script>
-	
+	<script src="getSheetData.js" type="text/javascript" defer></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script src="charts.js"></script> 
-		<link rel="stylesheet" href="style.css">
-
-    <title>Azucar Al Gusto</title>
+    <title>Azucar Al Gusto V1.0</title>
     <style>
         body {
             text-align: center;
@@ -115,21 +113,21 @@
             <h2>Ganancias por Postre (Top 7)</h2>
             <div id="p2Chart"></div>
 				<script type="text/javascript">
-				google.charts.load("current", { packages: ["calendar"] });
+				google.charts.load("current", { packages: ["BarChart"] });
 				</script>
         </div>
 		<div id="p4" class="panel">
             <h2>Postres %</h2>
             <div id="p4Chart"></div>
 				<script type="text/javascript">
-				google.charts.load("current", { packages: ["calendar"] });
+				google.charts.load("current", { packages: ["PieChart"] });
 				</script>
         </div>
         <div id="p3" class="panel">
             <h2>Flujo de Clientes</h2>
             <div id="p3Chart"></div>
 				<script type="text/javascript">
-				google.charts.load("current", { packages: ["calendar"] });
+				google.charts.load("current", { packages: ["Column"] });
 				</script>
         </div>
         
