@@ -1,200 +1,410 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-	<link rel="icon" href="data:,">
     <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"
-        integrity="sha512-Y8iWYJDo6HiTo5xtml1g4QqHtl/PO1w+dmUpQfQSOTqKNsMhExfyPN2ncNAe9JuJUSKzwK/b6oaNPop4MXzkwg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="script.js" type="text/javascript" defer></script>
-	<script src="getSheetData.js" type="text/javascript" defer></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <title>Azucar Al Gusto</title>
-    <style>
-        body {
-            text-align: center;
-            background-color: #FFFBF1;
-            font-family: 'Book Antiqua', serif;
-            color: #6E3420;
-            position: relative; /* Enable positioning for heart placement */
-            overflow: auto; /* Allow scrolling */
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azúcar al Gusto</title>
+	<link rel="icon" href="favicon.png" type="image/x-icon">
+	
+	<style>
+    body {
+        font-family: "Times New Roman", Times, serif;
+		color: #6E3420;
+		font-size: .8em;
+        background-color: #FFFBF1;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-        /* Estilos para los corazones */
-        .heart {
-            position: fixed; /* Mantenerlos fijos en la ventana */
-            pointer-events: none; /* Evitar interferencia con clics */
-            z-index: 0; /* Asegurarse de que están detrás del contenido */
-        }
+    header {
+        background-color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        padding: 0 20px; /* Añadir espacio alrededor del contenido del header */
+        height: 80px;
+        width: 100%;
+    }
 
-        h1 {
-            margin-top: 20px;
-            font-size: 50px;
-            position: relative; /* Para asegurarse de que está encima de los corazones */
-            z-index: 1; /* Más alto que los corazones */
-        }
+    /* Estilos para el logo */
+    .logo {
+        height: 60px; /* Ajustar el tamaño del logo */
+        margin-right: 15px;
+		margin-left: 15px;
+    }
 
-        .banner {
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            background-color: #FFFBF1; /* Mantener background color */
-            position: relative; /* Enable positioning for the logo */
-            z-index: 1; /* Más alto que los corazones */
-        }
+    /* Estilos para el título */
+    .title {
+        font-family: "Times New Roman", Times, serif;
+        color: #6E3420;
+        font-size: 3.5em; /* Tamaño del texto del título */
+        margin: 0;
+        line-height: 80px; /* Alinear verticalmente el texto con el header */
+    }
 
-        .banner img {
-            height: 90px; /* Logo height */
-            margin-right: 10px; /* Space between logo and title */
-        }
+    .button-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        padding: 10px 0;
+        background-color: #E3AF9D;
+    }
 
-        .dashboard-wrapper {
-            margin: auto;
-            max-width: 1000px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-gap: 10px;
-            position: relative; /* Para asegurarse de que está encima de los corazones */
-            z-index: 1; /* Más alto que los corazones */
-        }
+    .button-container button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        background-color: #6E3420;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
 
-		.panel {
-			text-align: left;
-			background-color: #FFFBF1; /* Color de fondo rosa */
-			border: 3px solid #6E3420; /* Borde color café */
-			box-shadow: 0 0 4px 1px rgba(143, 143, 143, .2); /* Sombra ligera */
-			padding: 10px;
-			border-radius: 15px; /* Bordes redondeados */
-		}
+    .button-container button:hover {
+        background-color: #4A2416;
+    }
 
-        
-        #p2.panel {
-            grid-column: 1 / 3;
-        }
-		#p4.panel {
-            grid-column: 3 / 4;
-        }
-		#p3.panel {
-            grid-column: 1 / 4;
-        }
-		#p5.panel {
-            grid-column: 1 / 4;
-        }
-		#p1.panel {
-            grid-column: 1 / 4;
-        }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: #6E3420;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
 
-        .bottom {
-            font-size: 5px;
-            margin-top: 15px;
-            position: relative; /* Para asegurarse de que está encima de los corazones */
-            z-index: 1; /* Más alto que los corazones */
-        }
+    button:hover {
+        background-color: #4A2416;
+    }
 
-        .bottom a {
-            color: #333;
-            text-decoration: none;
-        }
-    </style>
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .gallery-item {
+        margin: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    .inputBox {
+        margin: 15px 0;
+    }
+
+    .inputBox input, .inputBox textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .alert {
+        display: none;
+        background-color: #4CAF50;
+        color: #E3AF9D;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    /* Estilos para el pop-up */
+    #loginPopup, #messagePopup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #E3AF9D;
+        padding: 40px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        width: 60%;
+        max-width: 800px;
+        z-index: 1000;
+    }
+
+    #loginPopup button.back-btn, #messagePopup button.back-btn {
+        background-color: #6E3420;
+        margin-top: 20px;
+    }
+</style>
+
+<header>
+    <img src="favicon.png" alt="Logo Azúcar al Gusto" class="logo">
+    <h1 class="title">Azúcar al Gusto</h1>
+</header>
+
+	
 </head>
-
 <body>
-    <div class="banner">
-        <img src="https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/c40e9d831b36c07509097e64108a53359925adde/Logo%20Solo.svg" alt="Logo Azucar al Gusto">
-        <h1>Azúcar al Gusto</h1>
+
+<div class="button-container">
+    <button id="bott01.0" style="display:block" onclick="showLoginPopup()">Iniciar sesión</button>
+	<button id="bott01.1" style="display:none" onclick="closesecion()">Cerrar sesión</button>
+    <button id="bott02" onclick="contactUs()">Contáctanos por WhatsApp</button>
+    <button id="bott03" onclick="showMessagePopup()">Mandar mensaje</button>
+	<button id="bott03" onclick="Ubicanos()">Por donde estamos?</button>
+	<button id="bott05" style="display:none" onclick="readmessages()">Ver Mensajes</button>
+</div>
+<p>Disfruta de nuestra variedad de postres!</p>
+<!-- Galería de postres con descripciones -->
+<div class="gallery">
+    <div class="gallery-item">
+        <img src="postre1.png" alt="Pastel de Chocolate">
+        <p>Brownies - Imagina brownies densos y ricos, donde el chocolate oscuro se derrite en una capa líquida, envolviendo cada mordisco en un abrazo cálido y decadente. Las nueces crujientes aportan un contraste de textura que eleva la experiencia a otro nivel de placer. Un bocado y estarás perdido en un mundo de delicias chocolatosas.</p>
     </div>
-    <div class="dashboard-wrapper"> 
-        <div id="p2" class="panel">
-            <h2>Ganancias por Postre</h2>
-            <div id="p2Chart"></div>
-				<script type="text/javascript">
-				google.charts.load("current", { packages: ["BarChart"] });
-				</script>
-        </div>
-		<div id="p4" class="panel">
-            <h2>Postres %</h2>
-            <div id="p4Chart"></div>
-				<script type="text/javascript">
-				google.charts.load("current", { packages: ["PieChart"] });
-				</script>
-        </div>
-        <div id="p3" class="panel">
-            <h2>Flujo de Clientes</h2>
-            <div id="p3Chart"></div>
-				<script type="text/javascript">
-				google.charts.load("current", { packages: ["Column"] });
-				</script>
-        </div>
-        
-        <div id="p5" class="panel">
-            <h2>Ganancias al Dia</h2>
-            <div id="p5Chart"></div>
-				<script type="text/javascript">
-				google.charts.load("current", { packages: ["calendar"] });
-				</script>
-        </div>
+    <div class="gallery-item">
+        <img src="postre2.png" alt="Tarta de Fresa">
+        <p>Peach Pie - Una base cremosa de queso con duraznos dorados que brillan como pequeñas joyas, decorada con un toque ligero de crema batida. Cada bocado es una mezcla celestial de suavidad y frescura frutal, como un sueño veraniego hecho postre.</p>
     </div>
+    <div class="gallery-item">
+        <img src="postre3.png" alt="Cheesecake">
+        <p>Alfajores - Dos suaves galletas que rodean un dulce de leche denso y delicioso, con una capa exterior de nuez y coco que cruje en cada mordida. Es una explosión de texturas y sabores, un verdadero capricho para los sentidos.</p>
+    </div>
+	<div class="gallery-item">
+        <img src="postre4.png" alt="Cheesecake">
+        <p>Imposible - La magia del pastel de chocolate y el flan napolitano se combinan en este postre único, donde cada capa sorprende y deleita. La cereza en la cima es el toque final que eleva esta maravilla dulce a un nivel inigualable.</p>
+    </div>
+	<div class="gallery-item">
+        <img src="postre5.png" alt="Cheesecake">
+        <p>Carlota - Un equilibrio perfecto entre dulce y ácido, con crema de limón ligera sobre capas de galleta suave. El toque de nuez añade un crujido irresistible, haciendo de cada bocado un momento refrescante y delicioso.</p>
+    </div>
+	<div class="gallery-item">
+        <img src="postre6.png" alt="Cheesecake">
+        <p>Tortuga - Este cheesecake es puro lujo: una base cremosa de Philadelphia, bordeada por Oreo crujiente, y cubierta con chocolate Hersheys, cajeta y nueces. Una sinfonía de sabores que te lleva al éxtasis con cada mordida.</p>
+    </div>
+</div>
+<p>Pedidos al (+52) 8333 00-06-75</p>
 
-    <div class="bottom"><a target="_blank" href="">By Fabrizio Caceres</a></div>
+<!-- Formulario de mensaje en un pop-up -->
+<div id="messagePopup">
+    <form id="Contactanos">
+        <h2>Mandar mensaje</h2>
+        <div class="alert">¡Mensaje Enviado!</div>
 
-    <script>
-        // Function to place hearts randomly in the background
-        function placeHearts() {
-            const body = document.body;
-            const heartUrl = "https://raw.githubusercontent.com/AzucarAlGusto/AzucarAlGusto.github.io/3b3b3942e43128d828d7bfecad8587dda05199e4/Fondo%20corazones.svg";
-            const heartCount = 100; // Number of hearts to place
-            const heartSize = 15; // Size of each heart
-            const hearts = []; // Array to store heart positions
+        <div class="inputBox">
+            <input type="text" id="name" placeholder="Escribe tu nombre..." required />
+        </div>
 
-            // Function to check if a position is valid (100px away from other hearts)
-            function isValidPosition(x, y) {
-                for (let heart of hearts) {
-                    const dx = heart.x - x;
-                    const dy = heart.y - y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 100) {
-                        return false; // Too close to another heart
-                    }
-                }
-                return true; // Valid position
-            }
+        <div class="inputBox">
+            <input type="text" id="phone" placeholder="Escribe tu número de teléfono..." required />
+        </div>
 
-            for (let i = 0; i < heartCount; i++) {
-                let x, y;
+        <div class="inputBox">
+            <textarea id="msgContent" cols="30" rows="10" placeholder="Escribe aquí tu mensaje..." required></textarea>
+        </div>
 
-                // Find a valid position for the heart
-                do {
-                    x = Math.random() * (window.innerWidth - heartSize);
-                    y = Math.random() * (window.innerHeight - heartSize);
-                } while (!isValidPosition(x, y));
+        <div class="inputBox">
+            <button type="submit">Enviar</button>
+        </div>
+        <button type="button" class="back-btn" onclick="closeMessagePopup()">Atrás</button>
+    </form>
+</div>
 
-                // Store the heart's position
-                hearts.push({ x, y });
+<!-- Pop-up para Iniciar sesión / Crear cuenta -->
+<div id="loginPopup">
+    <h2 id="popupTitle">Iniciar sesión</h2>
+    <form id="loginForm">
+        <div id="usernameField" class="inputBox"  style="display:none">
+            <input type="text" id="username" placeholder="Nombre de usuario" required>
+        </div>
+        <div id="emailField" class="inputBox">
+            <input type="email" id="email" placeholder="Correo electrónico">
+        </div>
+        <div class="inputBox">
+            <input type="password" id="password" placeholder="Contraseña" required>
+        </div>
+        <div id="LoginButton" class="inputBox">
+            <button type="login" onclick="iniciarsecion()">Entrar</button>
+        </div>
+		<div id="RegisterButton" class="inputBox" style="display:none">
+            <button type="newreg" onclick="nuevousuario()">Registrarse</button>
+        </div>
+    </form>
+    <p>
+        <a href="#" onclick="toggleLoginMode()">No tienes cuenta? Regístrate</a>
+    </p>
+    <button class="back-btn" onclick="closeLoginPopup()">Atrás</button> <!-- Botón de atrás -->
+</div>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="conect.js"></script>
+<script src="mail.js"></script>
+<script src="register.js"></script>
+<script src="database.js"></script>
+<script>
+    let isLoginMode = true;
+	let isadmin = false;
+	update();
 
-                const heart = document.createElement('img');
-                heart.src = heartUrl;
-                heart.className = 'heart'; // Add class for styling
-                heart.style.width = heartSize + 'px';
-                heart.style.height = heartSize + 'px';
+    function showLoginPopup() {
+        document.getElementById('loginPopup').style.display = 'block';
+        document.getElementById('popupTitle').innerText = 'Iniciar sesión';
+        document.getElementById('emailField').style.display = 'block';
+        document.getElementById('usernameField').style.display = 'none';
+		document.getElementById('RegisterButton').style.display = 'none';
+		document.getElementById('LoginButton').style.display = 'block';
+        isLoginMode = true;
+    }
 
-                heart.style.left = x + 'px';
-                heart.style.top = y + 'px';
-
-                body.appendChild(heart);
-            }
+    function toggleLoginMode() {
+        if (isLoginMode) {
+            document.getElementById('popupTitle').innerText = 'Crear cuenta';
+            document.getElementById('usernameField').style.display = 'block';
+			document.getElementById('LoginButton').style.display = 'none';
+			document.getElementById('RegisterButton').style.display = 'block';
+            isLoginMode = false;
+        } else {
+            document.getElementById('popupTitle').innerText = 'Iniciar sesión';
+            document.getElementById('usernameField').style.display = 'none';
+			document.getElementById('RegisterButton').style.display = 'none';
+			document.getElementById('LoginButton').style.display = 'block';
+            isLoginMode = true;
         }
+    }
 
-        // Call the function to place hearts when the document is ready
-        $(document).ready(function() {
-            placeHearts();
-        });
-    </script>
+    function closeLoginPopup() {
+        document.getElementById('loginPopup').style.display = 'none';
+		document.getElementById("loginForm").reset();
+    }
 
+    function contactUs() {
+        window.open('https://wa.me/5218333000675', '_blank');
+    }
+	
+	function Ubicanos() {
+        window.open('https://maps.app.goo.gl/ETComW6q9ustyvjd6', '_blank');
+    }
+
+    function showMessagePopup() {
+        document.getElementById('messagePopup').style.display = 'block';
+        document.getElementById('loginPopup').style.display = 'none';
+    }
+
+    function closeMessagePopup() {
+        document.getElementById('messagePopup').style.display = 'none';
+		document.getElementById("Contactanos").reset();
+    }
+	
+	function update(){
+			const user = firebase.auth().currentUser;
+			if (user) {
+				if (isadmin) {
+				//alert("Azucar Al Gusto!")
+				document.getElementById('bott01.0').style.display = 'none';
+				document.getElementById('bott01.1').style.display = 'block';
+				document.getElementById('bott03').style.display = 'none';
+				document.getElementById('bott05').style.display = 'block';
+				  // User is signed in, see docs for a list of available properties
+				  // https://firebase.google.com/docs/reference/js/v8/firebase.User
+				  // ...
+				} else {
+				//alert("Secion iniciada")
+				document.getElementById('bott01.0').style.display = 'none';
+				document.getElementById('bott01.1').style.display = 'block';
+				document.getElementById('bott05').style.display = 'none';
+				  // User is signed in, see docs for a list of available properties
+				  // https://firebase.google.com/docs/reference/js/v8/firebase.User
+				  // ...
+				  }
+			} else {
+			  //alert("Secion no abierta")
+			}
+		}
+		
+function llenarFondoDeCorazones() {
+    const body = document.body;
+    const heartImageURL = "corazones.svg";
+    const totalCorazones = 50; // Número total de corazones a colocar
+    const minDistance = 100; // Distancia mínima entre corazones
+
+    // Crea un contenedor para los corazones
+    const fondoCorazones = document.createElement('div');
+    fondoCorazones.style.position = 'fixed';
+    fondoCorazones.style.top = '0';
+    fondoCorazones.style.left = '0';
+    fondoCorazones.style.width = '100vw';
+    fondoCorazones.style.height = '100vh';
+    fondoCorazones.style.zIndex = '-1'; // Se asegura de que esté detrás de otros elementos
+    fondoCorazones.style.pointerEvents = 'none'; // Para que los clics no interfieran
+
+    // Obtiene el tamaño de la ventana
+    const bodyWidth = window.innerWidth;
+    const bodyHeight = window.innerHeight;
+
+    let posiciones = [];
+
+    for (let i = 0; i < totalCorazones; i++) {
+        // Crea un elemento div para cada corazón
+        const corazon = document.createElement('div');
+        corazon.style.width = '50px'; // Tamaño de cada corazón
+        corazon.style.height = '50px';
+        corazon.style.position = 'absolute';
+        corazon.style.backgroundImage = `url(${heartImageURL})`;
+        corazon.style.backgroundSize = 'contain';
+        corazon.style.backgroundRepeat = 'no-repeat';
+
+        let x, y, tooClose;
+
+        // Asegura que los corazones estén al menos a minDistance de distancia entre sí
+        do {
+            tooClose = false;
+            x = Math.random() * (bodyWidth - 50);
+            y = Math.random() * (bodyHeight - 50);
+
+            // Verifica si la nueva posición está demasiado cerca de otras posiciones
+            for (let pos of posiciones) {
+                const dist = Math.sqrt(Math.pow(pos.x - x, 2) + Math.pow(pos.y - y, 2));
+                if (dist < minDistance) {
+                    tooClose = true;
+                    break;
+                }
+            }
+        } while (tooClose);
+
+        // Guarda la posición y coloca el corazón
+        posiciones.push({ x, y });
+        corazon.style.left = `${x}px`;
+        corazon.style.top = `${y}px`;
+
+        // Añade el corazón al contenedor de fondo
+        fondoCorazones.appendChild(corazon);
+    }
+
+    // Añade el contenedor de corazones al body
+    body.appendChild(fondoCorazones);
+}
+
+// Llama a la función cuando la página haya cargado
+window.onload = llenarFondoDeCorazones;
+
+</script>
 </body>
-
 </html>

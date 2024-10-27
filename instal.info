@@ -1,0 +1,66 @@
+///-Data when creating
+
+
+Si ya usas npm y un agrupador de módulos como Webpack o Rollup, puedes ejecutar el siguiente comando para instalar la versión más reciente del SDK (más información):
+
+npm install firebase
+Luego, inicializa Firebase y comienza a usar los SDK de los productos que quieres utilizar.
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyB5YmM3UFOZpoI9cV1XgKi438unpKyYVsw",
+  authDomain: "azucaralgusto-deb1d.firebaseapp.com",
+  databaseURL: "https://azucaralgusto-deb1d-default-rtdb.firebaseio.com",
+  projectId: "azucaralgusto-deb1d",
+  storageBucket: "azucaralgusto-deb1d.appspot.com",
+  messagingSenderId: "309749979817",
+  appId: "1:309749979817:web:ca7548135997dd4f46e7b8"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+Nota: Esta opción utiliza el SDK de JavaScript modular, que proporciona un tamaño reducido del SDK.
+
+Obtén más información sobre Firebase para la Web: primeros pasos, referencia de la API del SDK web y muestras
+
+
+
+///-
+
+Usar una etiqueta <script>
+Si no usas herramientas de compilación, utiliza esta opción para agregar y usar el SDK de Firebase JS. Utiliza esta opción a fin de comenzar, aunque no se recomienda para las apps en producción. Obtén más información.
+
+Copia y pega estas secuencias de comandos en la parte inferior de la etiqueta <body> antes de usar cualquier servicio de Firebase:
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyB5YmM3UFOZpoI9cV1XgKi438unpKyYVsw",
+    authDomain: "azucaralgusto-deb1d.firebaseapp.com",
+    databaseURL: "https://azucaralgusto-deb1d-default-rtdb.firebaseio.com",
+    projectId: "azucaralgusto-deb1d",
+    storageBucket: "azucaralgusto-deb1d.appspot.com",
+    messagingSenderId: "309749979817",
+    appId: "1:309749979817:web:ca7548135997dd4f46e7b8"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
+¿Usas npm o un agrupador como Webpack o Rollup? Descubre el SDK modular .
+
+Obtén más información sobre Firebase para la Web: primeros pasos, referencia de la API del SDK web y muestras
+
+
+
+
